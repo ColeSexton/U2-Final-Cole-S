@@ -1,0 +1,71 @@
+.songForm{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2rem;
+  color: #6b6b6b;
+}
+
+.formSelection,
+.previewSelection{
+    flex: 1;
+}
+
+.previewSelection{
+  padding: 1rem;
+  border-left: 2px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+
+.previewInstruments{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.instrumentIcon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50px;
+    text-align: center;
+}
+
+.instrumentIcon:hover{
+    color: blueviolet;
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+
+
+.instrumentIcon .instrumentLabel {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.instrumentIcon:hover .instrumentLabel {
+  opacity: 1;
+}
+
+#submitButton{
+    margin-top: 30px;
+    padding: 1rem 1rem ;
+    background-color: #5b0f5b;
+    color: black;
+    font-size:larger;
+    font-weight: bolder;
+    border: dotted;
+    border-radius: 5px;
+
+    
+}
+
+@media (max-width: 768px){
+    .songForm{
+        flex-direction: column;
+    }
+}

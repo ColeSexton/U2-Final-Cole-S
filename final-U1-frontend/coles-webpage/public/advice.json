@@ -1,0 +1,61 @@
+[
+    {"id" : 1, 
+    "description": "Try this chord progression in any key: iii ii V IV",
+    "category" : "music"
+    },
+    {
+        "id": 2,
+        "description": "Try this chord progression in any key: I iii ii V",
+        "category": "music"
+    },
+    {
+        "id": 3,
+        "description":"Try this chord progression in any key: i iv V  vi",
+        "category":"music"
+    },
+    {
+        "id":4,
+        "description":"Pick three random notes on your instrument. Then choose either major, minor, or dominant for each note and use those chords in a song.",
+        "category": "music"
+    },
+    {
+        "id": 5,
+        "description":"Write down 2 emotions you are feeling now. Then write down something right in front of you. Now describe each of those in 2 lines, and put the lines together randomly.",
+        "category": "poems"
+    },
+    {
+        "id":6,
+        "description": "Write a haiku about the first thing you ate today",
+        "category": "poems"
+    },
+    {
+        "id": 7,
+        "description":"Describe a recent day dream in two paragraphs",
+        "category": "poems"
+    },
+    {
+        "id": 8,
+        "description": "Write down four random words. Take the second letter from each word, and write a word that comes to mind from that. Then try to use these words in a sentence or two.",
+        "category":"poems"
+    },
+    {
+        "id": 9,
+        "description": "'Art is the elimination of the unnecesary.' ---Pablo Picasso",
+        "category": "creativity"
+    },
+    {
+        "id":10,
+        "description":"'There is no innovation and creativity without failure.' ---Brene Brown",
+        "category": "creativity"
+    },
+    {
+        "id": 11,
+        "description": "'Great things are done by a series of small things brought together.' ---Vincent Van Gogh",
+        "category":"creativity"
+    },
+    {
+        "id":12,
+        "description":"'Simplicity is the ultimate sophistication.' ---Leonardo Da Vinci",
+        "category":"creativity"
+    }
+]

@@ -1,0 +1,41 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  color: rgb(204, 202, 199);
+  background-color: #5b0f5b;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+#footerLeft, #footerCenter, #footerRight {
+  display: flex;
+  align-items: center;
+}
+
+#footerLeft img {
+  width: 80px;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+#footerCenter {
+  justify-content: center;
+  text-align: center;
+}
+
+#footerRight {
+  justify-content: flex-end;
+
+}
+
