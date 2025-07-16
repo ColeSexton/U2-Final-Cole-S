@@ -8,8 +8,10 @@ public class SongFormInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "personal_info_id")
-    private int personalInfoId;
+    // Foreign key to PersonalInfo
+   @ManyToOne
+   @JoinColumn(name = "personal_info_id",referencedColumnName = "id")
+   private PersonalInfo personalInfo;
 
     @Column(name = "title")
     private String title;
@@ -50,8 +52,8 @@ public class SongFormInfo {
     public SongFormInfo() {
     }
 
-    public SongFormInfo(int personalInfoId, String title, String genre, String style, String instruments, boolean lyricsIncluded, String lyricsText, int length, boolean forSomeone, String forSomeoneExplain, String emotions, String extraInfo, String bounce) {
-        this.personalInfoId = personalInfoId;
+    public SongFormInfo(PersonalInfo personalInfo, String title, String genre, String style, String instruments, boolean lyricsIncluded, String lyricsText, int length, boolean forSomeone, String forSomeoneExplain, String emotions, String extraInfo, String bounce) {
+        this.personalInfo= personalInfo;
         this.title = title;
         this.genre = genre;
         this.style = style;
@@ -73,12 +75,15 @@ public class SongFormInfo {
     public void setId(int id) {
         this.id = id;
     }
-    public int getPersonalInfoId() {
-        return personalInfoId;
+
+    //foreign key
+    public PersonalInfo getPersonalInfo() {
+        return personalInfo;
     }
-    public void setPersonalInfoId(int personalInfoId) {
-        this.personalInfoId = personalInfoId;
+    public void setPersonalInfo(PersonalInfo personalInfo) {
+        this.personalInfo = personalInfo;
     }
+
     public String getTitle() {
         return title;
     }
