@@ -19,7 +19,7 @@ public class SongFormInfo {
     @Column(name = "genre")
     private String genre;
 
-    @Column(name = "style")
+    @Column(name = "style", length = 2500)
     private String style;
 
     @Column(name = "instruments")
@@ -28,7 +28,7 @@ public class SongFormInfo {
     @Column(name = "lyrics_inlcuded")
     private boolean lyricsIncluded;
 
-    @Column(name = "lyrics_text")
+    @Column(name = "lyrics_text", length = 10000)
     private String lyricsText;
 
     @Column(name = "length")
@@ -40,10 +40,10 @@ public class SongFormInfo {
     @Column(name = "for_someone_explain")
     private String forSomeoneExplain;
 
-    @Column(name = "emotions")
+    @Column(name = "emotions", length = 10000)
     private String emotions;
 
-    @Column(name = "extra_info")
+    @Column(name = "extra_info", length = 10000)
     private String extraInfo;
 
     @Column(name = "bounce")
