@@ -2,6 +2,8 @@ package com.example.U2_final_backend.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class PersonalInfo {
 
@@ -17,6 +19,9 @@ public class PersonalInfo {
 
     @Column(name = "phone")
     private String phone;
+
+    @OneToMany(mappedBy = "personalInfo", cascade = CascadeType.ALL)
+    private List<SongFormInfo> songs;
 
     public PersonalInfo() {
     }
@@ -51,6 +56,14 @@ public class PersonalInfo {
     }
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<SongFormInfo> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(List<SongFormInfo> songs) {
+        this.songs = songs;
     }
 
 }
