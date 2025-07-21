@@ -53,12 +53,25 @@ public class SongFormInfoController {
 
 
     @PutMapping("/{id}")
-    public SongFormInfo updateSongFormInfo(@PathVariable int id, @RequestBody SongFormInfo songFormInfo) {
-        if (songFormInfoRepository.existsById(id)) {
-            songFormInfo.setId(id);
-            return songFormInfoRepository.save(songFormInfo);
-        }
-        return null; // maybe throw an exception
+    public SongFormInfo updateSongFormInfo(@PathVariable int id, @RequestBody SongFormInfo updatedSongFormInfo) {
+
+        SongFormInfo existing = songFormInfoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "SongFormInfo not found"));
+
+        existing.setTitle(updatedSongFormInfo.getTitle());
+        existing.setGenre(updatedSongFormInfo.getGenre());
+        existing.setStyle(updatedSongFormInfo.getStyle());
+        existing.setInstruments(updatedSongFormInfo.getInstruments());
+        existing.setLyricsIncluded(updatedSongFormInfo.isLyricsIncluded());
+        existing.setLyricsText(updatedSongFormInfo.getLyricsText());
+        existing.setLength(updatedSongFormInfo.getLength());
+        existing.setForSomeone(updatedSongFormInfo.isForSomeone());
+        existing.setForSomeoneExplain(updatedSongFormInfo.getForSomeoneExplain());
+        existing.setEmotions(updatedSongFormInfo.getEmotions());
+        existing.setExtraInfo(updatedSongFormInfo.getExtraInfo());
+        existing.setBounce(updatedSongFormInfo.getBounce());
+
+        return songFormInfoRepository.save(existing); // maybe throw an exception
     }
 
     @DeleteMapping("/{id}")
