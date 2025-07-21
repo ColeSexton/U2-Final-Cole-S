@@ -1,5 +1,7 @@
 package com.example.U2_final_backend.controllers;
 
+import com.example.U2_final_backend.dto.SongFormSubmissionDTO;
+import com.example.U2_final_backend.models.PersonalInfo;
 import com.example.U2_final_backend.models.SongFormInfo;
 import com.example.U2_final_backend.repositories.PersonalInfoRepository;
 import com.example.U2_final_backend.repositories.SongFormInfoRepository;
@@ -32,11 +34,20 @@ public class SongFormInfoController {
 
     //ensures that the personalInfo exists before creating a SongFormInfo
     @PostMapping
-    public SongFormInfo createSongFormInfo(@RequestBody SongFormInfo songFormInfo) {
-        if (songFormInfo.getPersonalInfo() == null ||
-                !personalInfoRepository.existsById(songFormInfo.getPersonalInfo().getId())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "PersonalInfo not found");
+    public SongFormInfo createSongFormInfo(@RequestBody SongFormSubmissionDTO submissionDTO) {
+        PersonalInfo personalInfo = submissionDTO.getPersonalInfo();
+
+        // Check if personalInfo already exists by ID
+        if(personalInfo.getId() != null){
+            personalInfo = personalInfoRepository.findById(personalInfo.getId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "PersonalInfo not found"));
+        } else{
+            personalInfo = personalInfoRepository.save(personalInfo);
         }
+
+        SongFormInfo songFormInfo = submissionDTO.getSongFormInfo();
+        songFormInfo.setPersonalInfo(personalInfo);
+
         return songFormInfoRepository.save(songFormInfo);
     }
 
