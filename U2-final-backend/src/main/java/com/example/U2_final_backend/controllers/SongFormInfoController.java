@@ -53,10 +53,12 @@ public class SongFormInfoController {
 
 
     @PutMapping("/{id}")
-    public SongFormInfo updateSongFormInfo(@PathVariable int id, @RequestBody SongFormInfo updatedSongFormInfo) {
+    public SongFormInfo updateSongFormInfo(@PathVariable int id, @RequestBody SongFormSubmissionDTO submissionDTO) {
 
         SongFormInfo existing = songFormInfoRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "SongFormInfo not found"));
+
+        SongFormInfo updatedSongFormInfo = submissionDTO.getSongFormInfo();
 
         existing.setTitle(updatedSongFormInfo.getTitle());
         existing.setGenre(updatedSongFormInfo.getGenre());
@@ -70,6 +72,21 @@ public class SongFormInfoController {
         existing.setEmotions(updatedSongFormInfo.getEmotions());
         existing.setExtraInfo(updatedSongFormInfo.getExtraInfo());
         existing.setBounce(updatedSongFormInfo.getBounce());
+
+        // Update PersonalInfo if it exists in the submissionDTO
+        PersonalInfo updatedPersonalInfo = submissionDTO.getPersonalInfo();
+        if (updatedPersonalInfo != null && updatedPersonalInfo.getId() != null) {
+            PersonalInfo existingPersonalInfo = personalInfoRepository.findById(updatedPersonalInfo.getId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "PersonalInfo not found"));
+
+            existingPersonalInfo.setName(updatedPersonalInfo.getName());
+            existingPersonalInfo.setEmail(updatedPersonalInfo.getEmail());
+            existingPersonalInfo.setPhone(updatedPersonalInfo.getPhone());
+
+            personalInfoRepository.save(existingPersonalInfo);
+            existing.setPersonalInfo(existingPersonalInfo);
+        }
+
 
         return songFormInfoRepository.save(existing); // maybe throw an exception
     }
