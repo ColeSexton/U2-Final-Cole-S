@@ -20,9 +20,6 @@ public class PersonalInfo {
     @Column(name = "phone")
     private String phone;
 
-    @OneToMany(mappedBy = "personalInfo", cascade = CascadeType.ALL)
-    private List<SongFormInfo> songs;
-
     public PersonalInfo() {
     }
 
@@ -58,12 +55,5 @@ public class PersonalInfo {
         this.phone = phone;
     }
 
-    public List<SongFormInfo> getSongs() {
-        return songs;
-    }
-
-    public void setSongs(List<SongFormInfo> songs) {
-        this.songs = songs;
-    }
 
 }
