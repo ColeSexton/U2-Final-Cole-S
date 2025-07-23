@@ -7,6 +7,7 @@ import SongForm from './components/SongForm';
 import Generator from './components/Generator';
 import Submission from './components/Submission';
 import Header from "./components/reuse/Header";
+import SynthTrack from './components/synth/SynthTrack';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path='/SongForm' element={<SongForm/>}/>
         <Route path='/Generator' element={<Generator/>}/>
         <Route path='/Submission' element={<Submission/>}/>
+        <Route path='/synth' element={<SynthTrack/>}/>
       </Routes>
     </Router>
     </>
