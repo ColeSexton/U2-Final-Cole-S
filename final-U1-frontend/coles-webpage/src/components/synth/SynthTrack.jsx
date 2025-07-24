@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createSynth } from '../utils/audioUtils';
-
+import '../synth/SynthTrack.css'; 
 
 const keyboardNotes = {
     a: 261.63, //c 
@@ -41,28 +41,36 @@ const SynthTrack = () =>{
     const [waveform, setWaveForm] = useState('sine');
     const activeOscillators = useRef({});
 
+    const playNote = (frequency, keyId) => {
+        if(!audioCtxRef.current){
+            audioCtxRef.current = new(window.AudioContext)();
+        }
+
+        if(activeOscillators.current[keyId]) return;
+
+        const {osc, gain} = createSynth(audioCtxRef.current, waveform, frequency);
+        osc.start();
+        activeOscillators.current[keyId] = {osc, gain};
+
+    };
+
+    const stopNote = (keyId) => {
+        const synth = activeOscillators.current[keyId];
+        if (synth){
+            synth.osc.stop();
+            delete activeOscillators.current[keyId];
+        }
+    };
+
     useEffect(() => {
         const handleKeyDown = (e) => {
-            const key = e.key.toLowerCase();
-            if(!keyboardNotes[key] || activeOscillators.current[key]) return;
-
-            if(!audioCtxRef.current){
-                audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
-            }
-
-            const {osc, gain} = createSynth(audioCtxRef.current, waveform, keyboardNotes[key]);
-            osc.start();
-            activeOscillators.current[key] = {osc, gain};
+            const key = e.key;
+            if(!keyboardNotes[key]) return;
+            playNote(keyboardNotes[key], key)
         };
 
         const handleKeyUp = (e) => {
-            const key = e.key.toLowerCase();
-            const synth = activeOscillators.current[key];
-
-            if (synth){
-                synth.osc.stop();
-                delete activeOscillators.current[key];
-            }
+            stopNote(e.key);
         };
 
         window.addEventListener('keydown', handleKeyDown);
@@ -77,8 +85,8 @@ const SynthTrack = () =>{
     }, [waveform]);
 
     return (
-            <div>
-      <h2>🎹 Synth Keyboard</h2>
+            <div className='synth'>
+      <h2>Synth Keyboard</h2>
 
       <label>
         Waveform:
@@ -90,8 +98,26 @@ const SynthTrack = () =>{
         </select>
       </label>
 
-      <div>
-        <p>Use keys <strong>A</strong> to <strong>K</strong> to play notes.</p>
+      <div className='piano'>
+        {noteKeyFreq.map(({note, key, freq})=>(
+            <button
+                key={note}
+                onMouseDown={() => playNote(freq, key)}
+                onMouseUp={()=> stopNote(key)}
+                style={{
+                    width: '40px',
+                    height: '120px',
+                    marginRight: '4px',
+                    background: '#fff',
+                    border: '1px solid #000',
+                    borderRadius: '4px',
+                    fontSize: '0.7rem',
+      }}>
+            {note}
+            <br />
+            ({key})
+            </button>
+        ))}
       </div>
     </div>
   );
