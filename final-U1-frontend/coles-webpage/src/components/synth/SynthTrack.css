@@ -1,4 +1,17 @@
 .synth{
     background-color: rgb(252, 252, 246);
+}
 
+.piano{
+    display: flex;
+}
+
+.pianoKeys{
+    width: '4px';
+    height: '500px';
+    margin-right: ' 4px';
+    background: '#fff';
+    border: '1px solid #000';
+    border-radius: '4px';
+    font-size: '0.7rem';
 }

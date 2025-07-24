@@ -36,7 +36,7 @@ const noteKeyFreq = [
 
 ]
 
-const SynthTrack = () =>{
+const SynthTrack = ({ defaultWaveform = 'sine', defaultOctave = 0 }) =>{
     const audioCtxRef = useRef(null);
     const [waveform, setWaveForm] = useState('sine');
     const activeOscillators = useRef({});
@@ -71,6 +71,7 @@ const SynthTrack = () =>{
 
         const handleKeyUp = (e) => {
             stopNote(e.key);
+
         };
 
         window.addEventListener('keydown', handleKeyDown);
@@ -101,18 +102,11 @@ const SynthTrack = () =>{
       <div className='piano'>
         {noteKeyFreq.map(({note, key, freq})=>(
             <button
+                className='pianoKeys'
                 key={note}
                 onMouseDown={() => playNote(freq, key)}
                 onMouseUp={()=> stopNote(key)}
-                style={{
-                    width: '40px',
-                    height: '120px',
-                    marginRight: '4px',
-                    background: '#fff',
-                    border: '1px solid #000',
-                    borderRadius: '4px',
-                    fontSize: '0.7rem',
-      }}>
+            >
             {note}
             <br />
             ({key})
