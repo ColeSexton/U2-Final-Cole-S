@@ -36,12 +36,13 @@ const noteKeyFreq = [
 
 ]
 
-const SynthTrack = ({ defaultWaveform = 'sine', defaultOctave = 0 }) =>{
+const SynthTrack = ({ defaultWaveform = 'sine', defaultOctave = 0, isActive = false}) =>{
     const audioCtxRef = useRef(null);
     const [waveform, setWaveForm] = useState('sine');
     const activeOscillators = useRef({});
 
     const playNote = (frequency, keyId) => {
+        
         if(!audioCtxRef.current){
             audioCtxRef.current = new(window.AudioContext)();
         }
@@ -63,6 +64,8 @@ const SynthTrack = ({ defaultWaveform = 'sine', defaultOctave = 0 }) =>{
     };
 
     useEffect(() => {
+        if(!isActive) return;
+
         const handleKeyDown = (e) => {
             const key = e.key;
             if(!keyboardNotes[key]) return;
@@ -83,7 +86,7 @@ const SynthTrack = ({ defaultWaveform = 'sine', defaultOctave = 0 }) =>{
         };
 
 
-    }, [waveform]);
+    }, [isActive,waveform]);
 
     return (
             <div className='synth'>
