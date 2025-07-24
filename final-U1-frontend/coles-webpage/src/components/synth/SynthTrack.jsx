@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createSynth } from '../utils/audioUtils';
 
+
 const keyboardNotes = {
     a: 261.63, //c 
     w: 277.18, //c#
@@ -16,6 +17,24 @@ const keyboardNotes = {
     j: 493.88, //b
     k: 523.25 //c
 }
+
+//for UI piano 
+const noteKeyFreq = [
+    {note: "C4", key: "a", freq: 261.63},
+    {note: "C#4", key: "w", freq: 277.18},
+    {note: "D4", key: "s", freq: 293.66},
+    {note: "D#4", key: "e", freq: 311.13},
+    {note: "E4", key: "d", freq: 329.63},
+    {note: "F4", key: "f", freq: 349.23},
+    {note: "F#4", key: "t", freq: 369.99},
+    {note: "G4", key: "g", freq: 392},
+    {note: "G#4", key: "y", freq: 415.30},
+    {note: "A4", key: "h", freq: 440},
+    {note: "A#4", key: "u", freq: 466.16},
+    {note: "B4", key: "j", freq: 493.88},
+    {note: "C5", key: "k", freq: 523.25},
+
+]
 
 const SynthTrack = () =>{
     const audioCtxRef = useRef(null);
