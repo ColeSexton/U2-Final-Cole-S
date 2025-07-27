@@ -41,9 +41,16 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
     const [waveform, setWaveForm] = useState('sine');
     const activeOscillators = useRef({});
 
+    //ADSR State variables
+    const [attack, setAttack] = useState(0.1);
+    const [decay, setDecay] = useState(0.2);
+    const [sustain, setSustain] = useState(0.5);
+    const [release, setRelease] = useState(0.3);
+
     const playNote = (baseFreq, keyId) => {
 
         const freq = baseFreq * Math.pow(2,octaveShift);
+        const now = audioCtxRef.current?.currentTime || 0;
         
         if(!audioCtxRef.current){
             audioCtxRef.current = new(window.AudioContext)();
@@ -52,6 +59,13 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
         if(activeOscillators.current[keyId]) return;
 
         const {osc, gain} = createSynth(audioCtxRef.current, waveform, freq);
+
+        gain.gain.cancelScheduledValues(now);
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(1, now + attack) // (target value, endTime) ramp up to 1 over attack value.
+        gain.gain.linearRampToValueAtTime(sustain, now + attack + decay)
+
+    
         osc.start();
         activeOscillators.current[keyId] = {osc, gain};
 
