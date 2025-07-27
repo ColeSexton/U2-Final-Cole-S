@@ -92,7 +92,7 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
 
     return (
             <div className='synth'>
-      <h2>Synth Keyboard</h2>
+    
 
       <label>
         Waveform:
