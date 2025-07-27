@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createSynth } from '../utils/audioUtils';
 import '../synth/SynthTrack.css'; 
+import ADSRControls from './ADSRControls';
 
 const keyboardNotes = {
     a: 261.63, //c 
@@ -73,8 +74,16 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
 
     const stopNote = (keyId) => {
         const synth = activeOscillators.current[keyId];
+
         if (synth){
-            synth.osc.stop();
+
+            const now = audioCtxRef.current.currentTime;
+            synth.gain.gain.cancelScheduledValues(now);
+            synth.gain.gain.setValueAtTime(synth.gain.gain.value, now);
+            synth.gain.gain.linearRampToValueAtTime(0, now + release);
+
+
+            synth.osc.stop(now + release);
             delete activeOscillators.current[keyId];
         }
     };
@@ -117,6 +126,14 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
           <option value="sawtooth">Sawtooth</option>
         </select>
       </label>
+       
+        <ADSRControls 
+            attack={attack} setAttack={setAttack}
+            decay={decay} setDecay={setDecay}
+            sustain={sustain} setSustain={setSustain}
+            release={release} setRelease={setRelease}
+        />
+
 
       <div className='piano'>
         {noteKeyFreq.map(({note, key, freq})=>(
