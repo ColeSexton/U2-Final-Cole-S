@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { createSynth } from '../utils/audioUtils';
 import '../synth/SynthTrack.css'; 
 import ADSRControls from './ADSRControls';
+import EchoControl from './EchoControl';
 
 const keyboardNotes = {
     a: 261.63, //c 
@@ -48,6 +49,12 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
     const [sustain, setSustain] = useState(0.5);
     const [release, setRelease] = useState(0.3);
 
+    //echo state variables
+    const [echoTime, setEchoTime] = useState(0.3);
+    const [feedback, setFeedback] = useState(0.4);
+    const [mix, setMix] = useState(0.5);
+
+
     const playNote = (baseFreq, keyId) => {
 
         const freq = baseFreq * Math.pow(2,octaveShift);
@@ -59,7 +66,11 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
 
         if(activeOscillators.current[keyId]) return;
 
-        const {osc, gain} = createSynth(audioCtxRef.current, waveform, freq);
+        const {osc, gain} = createSynth(audioCtxRef.current, waveform, freq, {
+            time: echoTime,
+            feedback,
+            mix
+        });
 
         gain.gain.cancelScheduledValues(now);
         gain.gain.setValueAtTime(0, now);
@@ -133,7 +144,16 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
             sustain={sustain} setSustain={setSustain}
             release={release} setRelease={setRelease}
         />
+        <br />
 
+        <EchoControl
+            echoTime={echoTime}
+            setEchoTime={setEchoTime}
+            feedback={feedback}
+            setFeedback={setFeedback}
+            mix={mix}
+            setMix={setMix}
+        />
 
       <div className='piano'>
         {noteKeyFreq.map(({note, key, freq})=>(
