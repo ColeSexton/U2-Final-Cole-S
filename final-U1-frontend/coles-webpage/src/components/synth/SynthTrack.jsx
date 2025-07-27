@@ -36,12 +36,14 @@ const noteKeyFreq = [
 
 ]
 
-const SynthTrack = ({ defaultWaveform = 'sine', defaultOctave = 0, isActive = false}) =>{
+const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = false}) =>{
     const audioCtxRef = useRef(null);
     const [waveform, setWaveForm] = useState('sine');
     const activeOscillators = useRef({});
 
-    const playNote = (frequency, keyId) => {
+    const playNote = (baseFreq, keyId) => {
+
+        const freq = baseFreq * Math.pow(2,octaveShift);
         
         if(!audioCtxRef.current){
             audioCtxRef.current = new(window.AudioContext)();
@@ -49,7 +51,7 @@ const SynthTrack = ({ defaultWaveform = 'sine', defaultOctave = 0, isActive = fa
 
         if(activeOscillators.current[keyId]) return;
 
-        const {osc, gain} = createSynth(audioCtxRef.current, waveform, frequency);
+        const {osc, gain} = createSynth(audioCtxRef.current, waveform, freq);
         osc.start();
         activeOscillators.current[keyId] = {osc, gain};
 

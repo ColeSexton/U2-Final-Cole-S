@@ -18,12 +18,12 @@ const SynthApp = () => {
 
         <div>
             <h3>Lead</h3>
-            <SynthTrack isActive={activeTrack === 1}/>
+            <SynthTrack isActive={activeTrack === 1} octaveShift={0}/>
         </div>
 
         <div>
             <h3>Bass</h3>
-            <SynthTrack isActive={activeTrack === 2} defaultOctave={-1} />
+            <SynthTrack isActive={activeTrack === 2} octaveShift={-1} />
         </div>
 
         </div>
