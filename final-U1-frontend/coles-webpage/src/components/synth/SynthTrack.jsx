@@ -54,6 +54,11 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
     const [feedback, setFeedback] = useState(0.4);
     const [mix, setMix] = useState(0.5);
 
+    const delayNodeRef = useRef(null);
+    const feedbackGainRef = useRef(null);
+    const wetGainRef = useRef(null);
+    const dryGainRef = useRef(null);
+
 
     const playNote = (baseFreq, keyId) => {
 
@@ -66,11 +71,19 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
 
         if(activeOscillators.current[keyId]) return;
 
-        const {osc, gain} = createSynth(audioCtxRef.current, waveform, freq, {
+        const echo ={
             time: echoTime,
-            feedback,
-            mix
-        });
+            feedback: feedback,
+            mix: mix
+        }
+
+        const {osc, gain, feedbackGain, wetGain, dryGain, delayNode} = createSynth(audioCtxRef.current, waveform, freq, echo);
+
+        delayNodeRef.current = delayNode;
+        feedbackGainRef.current = feedbackGain;
+        wetGainRef.current = wetGain;
+        dryGainRef.current = dryGain;
+        
 
         gain.gain.cancelScheduledValues(now);
         gain.gain.setValueAtTime(0, now);
@@ -153,6 +166,10 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
             setFeedback={setFeedback}
             mix={mix}
             setMix={setMix}
+            delayNodeRef ={delayNodeRef}
+            feedbackGainRef ={feedbackGainRef}
+            wetGainRef = {wetGainRef}
+            dryGainRef ={dryGainRef}
         />
 
       <div className='piano'>
@@ -173,6 +190,6 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
   );
 };
 
-export default SynthTrack;
+export default SynthTrack; 
     
 

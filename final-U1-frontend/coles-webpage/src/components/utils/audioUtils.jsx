@@ -1,4 +1,4 @@
-export function createSynth(audioCtx, waveform ='sine', frequency= 440){
+export function createSynth(audioCtx, waveform ='sine', frequency= 440, echo = {time: 0, feedback: 0, mix: 0}){
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
 
@@ -31,7 +31,7 @@ export function createSynth(audioCtx, waveform ='sine', frequency= 440){
 
     osc.connect(gain);
 
-    return {osc, gain };
+    return {osc, gain, feedbackGain, wetGain, dryGain };
     
 
 }
