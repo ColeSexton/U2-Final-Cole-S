@@ -19,18 +19,18 @@ export function create3BandEQ(audioCtx){
     //low shelf filter 
     const lowShelf = audioCtx.createBiquadFilter();
     lowShelf.type = 'lowshelf'
-    lowShelf.frequency.value = 400;
+    lowShelf.frequency.value = 200;
 
     //mid
     const mid = audioCtx.createBiquadFilter();
     mid.type = 'peaking';
-    mid.frequency.value = 800;
+    mid.frequency.value = 1000;
     mid.Q.value = 1;
 
     //high shelf
     const highShelf = audioCtx.createBiquadFilter();
     highShelf.type = "highshelf";
-    highShelf.frequency.value = 3150;
+    highShelf.frequency.value = 5000;
 
     lowShelf.connect(mid);
     mid.connect(highShelf);

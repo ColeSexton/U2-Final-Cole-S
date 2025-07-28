@@ -7,8 +7,8 @@ const EQControl = ({lowGain, setLowGain, midGain, setMidGain, highGain, setHighG
                 Low:
                 <input
                     type="range"
-                    min="-12"
-                    max="12"
+                    min="-15"
+                    max="15"
                     step="0.5"
                     value={lowGain}
                     onChange={(e) => setLowGain(parseFloat(e.target.value))}
@@ -20,8 +20,8 @@ const EQControl = ({lowGain, setLowGain, midGain, setMidGain, highGain, setHighG
                 Mid:
                 <input
                     type="range"
-                    min="-12"
-                    max="12"
+                    min="-15"
+                    max="15"
                     step="0.5"
                     value={midGain}
                     onChange={(e) => setMidGain(parseFloat(e.target.value))}
@@ -33,11 +33,11 @@ const EQControl = ({lowGain, setLowGain, midGain, setMidGain, highGain, setHighG
                 High:
                 <input 
                     type="range"
-                    min="-12"
-                    max="12"
+                    min="-15"
+                    max="15"
                     step="0.5"   
                     value={highGain}
-                    onChange={setHighGain(parseFloat(e.target.value))}                 
+                    onChange={(e) => setHighGain(parseFloat(e.target.value))}                 
                 />
                 {highGain}db
             </label>

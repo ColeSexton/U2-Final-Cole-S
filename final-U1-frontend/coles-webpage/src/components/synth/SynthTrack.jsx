@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { createSynth } from '../utils/audioUtils';
+import { create3BandEQ, createSynth } from '../utils/audioUtils';
 import '../synth/SynthTrack.css'; 
 import ADSRControls from './ADSRControls';
 import EchoControl from './EchoControl';
+import EQControl from './EQControl';
 
 const keyboardNotes = {
     a: 261.63, //c 
@@ -59,6 +60,14 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
     const wetGainRef = useRef(null);
     const dryGainRef = useRef(null);
 
+    //eq state and ref
+
+    const [lowGain, setLowGain] = useState(0);
+    const [midGain, setMidGain] = useState(0);
+    const [highGain, setHighGain] = useState(0);
+
+    const eqRef = useRef(null);
+
 
     useEffect(()=>{
         if(!audioCtxRef.current){
@@ -104,6 +113,23 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
 
     },[echoTime, feedback, mix]);
 
+    //eq useEffect
+
+    useEffect(()=>{
+        if(!audioCtxRef.current) return;
+        
+        if(!eqRef.current){
+            eqRef.current = create3BandEQ(audioCtxRef.current);
+
+            eqRef.current.output.connect(audioCtxRef.current.destination) //connects eq to output destination 
+        }
+
+        eqRef.current.setLowGain(lowGain);
+        eqRef.current.setMidGain(midGain);
+        eqRef.current.setHighGain(highGain);
+
+    }, [lowGain, midGain, highGain]);
+
 
 
     const playNote = (baseFreq, keyId) => {
@@ -123,6 +149,12 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
 
         gain.connect(dryGainRef.current);
         gain.connect(delayNodeRef.current);
+
+        if(eqRef.current){
+            gain.connect(eqRef.current.input)
+        }else{
+            gain.connect(audioCtxRef.current.destination)
+        }
 
    
         //adsr
@@ -211,6 +243,16 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
             feedbackGainRef ={feedbackGainRef}
             wetGainRef = {wetGainRef}
             dryGainRef ={dryGainRef}
+        />
+        <br />
+
+        <EQControl
+            lowGain={lowGain}
+            setLowGain={setLowGain}
+            midGain={midGain}
+            setMidGain={setMidGain}
+            highGain={highGain}
+            setHighGain={setHighGain}
         />
 
       <div className='piano'>
