@@ -1,4 +1,4 @@
-const EchoControl =({echoTime, setEchoTime, feedback, setFeedback, mix, setMix, delayNodeRef, feedbackGainRef, wetGainRef, dryGainRef}) =>{
+const EchoControl =({echoTime, setEchoTime, feedback, setFeedback, mix, setMix}) =>{
     return(
         <div className="echoControls">
             <label>
@@ -6,14 +6,7 @@ const EchoControl =({echoTime, setEchoTime, feedback, setFeedback, mix, setMix, 
                 <input type="range" min="0" max="1" step="0.01" 
                 value={echoTime}
 
-                onChange={(e) => {
-                const value = parseFloat(e.target.value);
-                setEchoTime(value);
-                if (delayNodeRef.current){
-                    delayNodeRef.current.delayTime.setValueAtTime(value, delayNodeRef.current.context.currentTime);
-                    }
-                }}
-                />
+                onChange={(e) => setEchoTime(parseFloat(e.target.value))}/>
                 {echoTime}s
             </label>
 
@@ -21,13 +14,7 @@ const EchoControl =({echoTime, setEchoTime, feedback, setFeedback, mix, setMix, 
                 Feedback:
                 <input type="range" min="0" max="0.9" step="0.01" 
                 value={feedback} 
-                onChange={(e)=> {
-                const value = parseFloat(e.target.value)
-                setFeedback(value);
-                if(feedbackGainRef.current){
-                    feedbackGainRef.current.gain.value = value;
-                } 
-                }}/>
+                onChange={(e)=> setFeedback(parseFloat(e.target.value))}/>
                 {feedback}
             </label>
 
@@ -35,14 +22,7 @@ const EchoControl =({echoTime, setEchoTime, feedback, setFeedback, mix, setMix, 
                 Mix:
                 <input type="range" min="0" max="1" step="0.01" 
                 value={mix} 
-                onChange={(e)=> {
-                const value = parseFloat(e.target.value);
-                setMix(value);
-                if (wetGainRef.current && dryGainRef.current){
-                    wetGainRef.current.gain.value = value;
-                    dryGainRef.current.gain.value = 1 -value;
-                }
-                }}/>
+                onChange={(e)=> setMix(parseFloat(e.target.value))}/>
                 {mix}
             </label>
 

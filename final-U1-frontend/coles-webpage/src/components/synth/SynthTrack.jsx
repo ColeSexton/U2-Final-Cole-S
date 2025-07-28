@@ -60,38 +60,77 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
     const dryGainRef = useRef(null);
 
 
-    const playNote = (baseFreq, keyId) => {
-
-        const freq = baseFreq * Math.pow(2,octaveShift);
-        const now = audioCtxRef.current?.currentTime || 0;
-        
+    useEffect(()=>{
         if(!audioCtxRef.current){
-            audioCtxRef.current = new(window.AudioContext)();
+            audioCtxRef.current = new (window.AudioContext)();
         }
+        
+        const audioCtx =audioCtxRef.current;
 
-        if(activeOscillators.current[keyId]) return;
+        const delayNode = audioCtx.createDelay();
+        const feedbackGain = audioCtx.createGain();
+        const wetGain = audioCtx.createGain();
+        const dryGain = audioCtx.createGain();
 
-        const echo ={
-            time: echoTime,
-            feedback: feedback,
-            mix: mix
-        }
+        delayNode.connect(feedbackGain);
+        feedbackGain.connect(delayNode);
 
-        const {osc, gain, feedbackGain, wetGain, dryGain, delayNode} = createSynth(audioCtxRef.current, waveform, freq, echo);
+        wetGain.connect(audioCtx.destination);
+        dryGain.connect(audioCtx.destination);
 
         delayNodeRef.current = delayNode;
         feedbackGainRef.current = feedbackGain;
         wetGainRef.current = wetGain;
         dryGainRef.current = dryGain;
+
+        delayNode.delayTime.value = echoTime;
+        feedbackGain.gain.value = feedback;
+        wetGain.gain.value = mix;
+        dryGain.gain.value = 1 - mix;
+
+
+    },[]);
+
+    useEffect(()=>{
+        if(!delayNodeRef.current) return;
+
+        delayNodeRef.current.delayTime.setValueAtTime(echoTime, audioCtxRef.current.currentTime);
+        feedbackGainRef.current.gain.setValueAtTime(feedback, audioCtxRef.current.currentTime);
+        wetGainRef.current.gain.setValueAtTime(mix, audioCtxRef.current.currentTime);
+        dryGainRef.current.gain.setValueAtTime(1 - mix, audioCtxRef.current.currentTime);
+
+
+    },[echoTime, feedback, mix]);
+
+
+
+    const playNote = (baseFreq, keyId) => {
+        if(!audioCtxRef.current){
+            audioCtxRef.current = new(window.AudioContext)();
+        }
+
+
+        const audioCtx = audioCtxRef.current
+        const freq = baseFreq * Math.pow(2,octaveShift);
+        const now = audioCtx.currentTime
         
 
+        if(activeOscillators.current[keyId]) return;
+
+        const {osc, gain} = createSynth(audioCtx, waveform, freq);
+
+        gain.connect(dryGainRef.current);
+        gain.connect(delayNodeRef.current);
+
+   
+        //adsr
         gain.gain.cancelScheduledValues(now);
         gain.gain.setValueAtTime(0, now);
         gain.gain.linearRampToValueAtTime(1, now + attack) // (target value, endTime) ramp up to 1 over attack value.
         gain.gain.linearRampToValueAtTime(sustain, now + attack + decay)
 
     
-        osc.start();
+        osc.start(now);
         activeOscillators.current[keyId] = {osc, gain};
 
     };
