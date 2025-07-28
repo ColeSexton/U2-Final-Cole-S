@@ -59,6 +59,8 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
     const feedbackGainRef = useRef(null);
     const wetGainRef = useRef(null);
     const dryGainRef = useRef(null);
+    const finalMixGainRef = useRef(null);
+
 
     //eq state and ref
 
@@ -75,30 +77,48 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
         }
         
         const audioCtx =audioCtxRef.current;
-
+        
         const delayNode = audioCtx.createDelay();
         const feedbackGain = audioCtx.createGain();
         const wetGain = audioCtx.createGain();
         const dryGain = audioCtx.createGain();
+        const finalMixGain = audioCtx.createGain();
+
+        finalMixGain.gain.value = 1;
 
         delayNode.connect(feedbackGain);
         feedbackGain.connect(delayNode);
 
         delayNode.connect(wetGain);
 
-        wetGain.connect(audioCtx.destination);
-        dryGain.connect(audioCtx.destination);
 
+        //storing refs
         delayNodeRef.current = delayNode;
         feedbackGainRef.current = feedbackGain;
         wetGainRef.current = wetGain;
         dryGainRef.current = dryGain;
+        finalMixGainRef.current =finalMixGain;
+    
 
+        
         delayNode.delayTime.value = echoTime;
         feedbackGain.gain.value = feedback;
         wetGain.gain.value = mix;
         dryGain.gain.value = 1 - mix;
 
+
+        if(!eqRef.current){
+            const eq = create3BandEQ(audioCtx);
+            eqRef.current = eq;
+
+          }
+   
+            wetGain.connect(finalMixGain);
+            dryGain.connect(finalMixGain);
+
+            finalMixGain.connect(eqRef.current.input);
+            eqRef.current.output.connect(audioCtx.destination);
+       
 
     },[]);
 
@@ -113,20 +133,14 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
 
     },[echoTime, feedback, mix]);
 
-    //eq useEffect
 
     useEffect(()=>{
-        if(!audioCtxRef.current) return;
-        
-        if(!eqRef.current){
-            eqRef.current = create3BandEQ(audioCtxRef.current);
-
-            eqRef.current.output.connect(audioCtxRef.current.destination) //connects eq to output destination 
-        }
-
+        if(!eqRef.current ) return;
+  
         eqRef.current.setLowGain(lowGain);
         eqRef.current.setMidGain(midGain);
         eqRef.current.setHighGain(highGain);
+
 
     }, [lowGain, midGain, highGain]);
 
@@ -137,33 +151,28 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
             audioCtxRef.current = new(window.AudioContext)();
         }
 
+        if (audioCtxRef.current.state === 'suspended') {
+            audioCtxRef.current.resume();
+        }
+
+        if(activeOscillators.current[keyId]) return;
 
         const audioCtx = audioCtxRef.current
         const freq = baseFreq * Math.pow(2,octaveShift);
         const now = audioCtx.currentTime
         
-
-        if(activeOscillators.current[keyId]) return;
-
+        
         const {osc, gain} = createSynth(audioCtx, waveform, freq);
 
         gain.connect(dryGainRef.current);
         gain.connect(delayNodeRef.current);
 
-        if(eqRef.current){
-            gain.connect(eqRef.current.input)
-        }else{
-            gain.connect(audioCtxRef.current.destination)
-        }
-
-   
         //adsr
         gain.gain.cancelScheduledValues(now);
         gain.gain.setValueAtTime(0, now);
         gain.gain.linearRampToValueAtTime(1, now + attack) // (target value, endTime) ramp up to 1 over attack value.
         gain.gain.linearRampToValueAtTime(sustain, now + attack + decay)
 
-    
         osc.start(now);
         activeOscillators.current[keyId] = {osc, gain};
 
@@ -175,6 +184,7 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
         if (synth){
 
             const now = audioCtxRef.current.currentTime;
+
             synth.gain.gain.cancelScheduledValues(now);
             synth.gain.gain.setValueAtTime(synth.gain.gain.value, now);
             synth.gain.gain.linearRampToValueAtTime(0, now + release);
@@ -188,14 +198,24 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
     useEffect(() => {
         if(!isActive) return;
 
+        const resumeCtx = () => {
+            if (audioCtxRef.current && audioCtxRef.current.state === 'suspended'){
+                audioCtxRef.current.resume();
+            }
+        };
+
+        window.addEventListener('keydown', resumeCtx,{once: true});
+        window.addEventListener('mousedown', resumeCtx,{once: true});
+
         const handleKeyDown = (e) => {
-            const key = e.key;
+            if(e.repeat) return;
+            const key = e.key.toLowerCase();
             if(!keyboardNotes[key]) return;
             playNote(keyboardNotes[key], key)
         };
 
         const handleKeyUp = (e) => {
-            stopNote(e.key);
+            stopNote(e.key.toLowerCase());
 
         };
 
@@ -205,6 +225,8 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
+            window.removeEventListener('keydown', resumeCtx);
+            window.removeEventListener('mousedown', resumeCtx);
         };
 
 
@@ -260,7 +282,9 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
             <button
                 className='pianoKeys'
                 key={note}
-                onMouseDown={() => playNote(freq, key)}
+                onMouseDown={() => {playNote(freq, key);
+                    }}
+                    
                 onMouseUp={()=> stopNote(key)}
             >
             {note}
