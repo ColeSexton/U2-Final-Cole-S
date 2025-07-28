@@ -75,6 +75,8 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
         delayNode.connect(feedbackGain);
         feedbackGain.connect(delayNode);
 
+        delayNode.connect(wetGain);
+
         wetGain.connect(audioCtx.destination);
         dryGain.connect(audioCtx.destination);
 

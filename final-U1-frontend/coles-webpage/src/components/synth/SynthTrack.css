@@ -7,11 +7,12 @@
 }
 
 .pianoKeys{
-    width: '4px';
-    height: '500px';
-    margin-right: ' 4px';
-    background: '#fff';
-    border: '1px solid #000';
-    border-radius: '4px';
-    font-size: '0.7rem';
+    width: 40px;
+    height: 150px; 
+    margin-right: 4px; 
+    background: #fff; 
+    border: 1px solid #000; 
+    border-radius: 4px; 
+    font-size: 0.7rem; 
+    cursor: pointer;
 }
