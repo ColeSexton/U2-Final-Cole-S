@@ -70,6 +70,9 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
 
     const eqRef = useRef(null);
 
+    //synthFader refs
+    const trackGainNodeRef = useRef(null);
+    const analyserNodeRef = useRef(null);
 
     useEffect(()=>{
         if(!audioCtxRef.current){
@@ -82,9 +85,18 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
         const feedbackGain = audioCtx.createGain();
         const wetGain = audioCtx.createGain();
         const dryGain = audioCtx.createGain();
-        const finalMixGain = audioCtx.createGain();
 
+        const finalMixGain = audioCtx.createGain();
         finalMixGain.gain.value = 1;
+
+        const trackGainNode = audioCtx.createGain();  //for synthfader 
+        trackGainNode.gain.value = 1;
+
+        const analyserNode =audioCtx.createAnalyser();
+        analyserNode.fftSize = 256;
+
+        
+
 
         delayNode.connect(feedbackGain);
         feedbackGain.connect(delayNode);
@@ -97,7 +109,11 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
         feedbackGainRef.current = feedbackGain;
         wetGainRef.current = wetGain;
         dryGainRef.current = dryGain;
+
         finalMixGainRef.current =finalMixGain;
+
+        trackGainNodeRef.current = trackGainNode;
+        analyserNodeRef,current = analyserNode;
     
 
         
@@ -117,7 +133,11 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
             dryGain.connect(finalMixGain);
 
             finalMixGain.connect(eqRef.current.input);
-            eqRef.current.output.connect(audioCtx.destination);
+            eqRef.current.output.connect(trackGainNode);
+            trackGainNode.connect(analyserNode);
+            analyserNode.connect(audioCtx.destination);
+
+
        
 
     },[]);
