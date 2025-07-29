@@ -13,6 +13,7 @@ const SynthFader =({audioCtx, inputNode}) =>{
 
         if(!audioCtx || !inputNode) return;
 
+
         const gainNode = audioCtx.createGain();
         const analyser = audioCtx.createAnalyser();
 
@@ -20,9 +21,12 @@ const SynthFader =({audioCtx, inputNode}) =>{
 
         inputNode.connect(gainNode);
         gainNode.connect(analyser);
+        //analyser.connect(audioCtx.destination);
 
         gainNodeRef.current = gainNode;
         analyserRef.current = analyser;
+
+        gainNode.connect(audioCtx.destination);
 
         const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
@@ -36,7 +40,7 @@ const SynthFader =({audioCtx, inputNode}) =>{
 
             }, 0)/ dataArray.length);
 
-            setLevel(rms);
+            setLevel(Math.min(rms,1));
             animationFrameRef.current = requestAnimationFrame(updateMeter);
         };
 
@@ -46,6 +50,7 @@ const SynthFader =({audioCtx, inputNode}) =>{
 
     }, [audioCtx, inputNode]);
 
+console.log('rms level', level);
 
     const handleVolumeChange = (e) => {
         const val = parseFloat(e.target.value);

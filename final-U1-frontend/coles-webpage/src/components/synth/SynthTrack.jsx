@@ -4,6 +4,7 @@ import '../synth/SynthTrack.css';
 import ADSRControls from './ADSRControls';
 import EchoControl from './EchoControl';
 import EQControl from './EQControl';
+import SynthFader from './SynthFader';
 
 const keyboardNotes = {
     a: 261.63, //c 
@@ -72,7 +73,6 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
 
     //synthFader refs
     const trackGainNodeRef = useRef(null);
-    const analyserNodeRef = useRef(null);
 
     useEffect(()=>{
         if(!audioCtxRef.current){
@@ -92,8 +92,6 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
         const trackGainNode = audioCtx.createGain();  //for synthfader 
         trackGainNode.gain.value = 1;
 
-        const analyserNode =audioCtx.createAnalyser();
-        analyserNode.fftSize = 256;
 
         
 
@@ -113,7 +111,6 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
         finalMixGainRef.current =finalMixGain;
 
         trackGainNodeRef.current = trackGainNode;
-        analyserNodeRef,current = analyserNode;
     
 
         
@@ -134,8 +131,8 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
 
             finalMixGain.connect(eqRef.current.input);
             eqRef.current.output.connect(trackGainNode);
-            trackGainNode.connect(analyserNode);
-            analyserNode.connect(audioCtx.destination);
+            trackGainNode.connect(audioCtx.destination);
+           
 
 
        
@@ -196,6 +193,7 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
         osc.start(now);
         activeOscillators.current[keyId] = {osc, gain};
 
+
     };
 
     const stopNote = (keyId) => {
@@ -253,9 +251,16 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
     }, [isActive,waveform]);
 
     return (
-            <div className='synth'>
-    
+        <div className='synthTrackContainer'>
 
+       <SynthFader 
+        inputNode={trackGainNodeRef.current}
+        audioCtx={audioCtxRef.current}
+        />
+
+
+    <div className='synth'>
+    
       <label>
         Waveform:
         <select value={waveform} onChange={(e) => setWaveForm(e.target.value)}>
@@ -313,6 +318,9 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
             </button>
         ))}
       </div>
+    </div>
+
+
     </div>
   );
 };

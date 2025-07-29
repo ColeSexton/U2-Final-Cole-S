@@ -19,30 +19,46 @@
 
 
 
+.synthTrackContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Wrap all controls and keyboard inside this */
+.synth {
+  flex: 1;
+}
+
+/* Fader styles */
 .synthFader {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 4rem; /* equivalent to w-16 */
+  margin-left: 1rem;
 }
 
 .volumeSlider {
-  height: 8rem; /* equivalent to h-32 */
-  transform: rotate(180deg);
+  transform: rotate(-90deg); /* rotate to make vertical */
+  width: 100px;              /* horizontal length becomes vertical height visually */
+  height: 20px;              /* thickness of the slider */
+  margin-bottom: 3rem;
 }
 
+/* Meter styles */
 .meterContainer {
-  width: 1.5rem; /* equivalent to w-6 */
-  height: 8rem;  /* equivalent to h-32 */
-  background-color: #1f2937; /* tailwind's bg-gray-800 */
-  margin-top: 0.5rem; /* mt-2 */
+  width: 15px;
+  height: 150px;
+  background-color: #222;
   position: relative;
+  border: 1px solid #444;
 }
 
 .meterFill {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: #4ade80; /* tailwind's bg-green-400 */
-  transition: height 0.1s linear;
+  background-color: #0f0;
+  /*transition: height 0.1s ease-out; */
 }
