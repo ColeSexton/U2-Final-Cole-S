@@ -21,10 +21,10 @@ const [formData, setFormData] = useState({
     genre: "",
     style: "",
     instruments: [],
-    lyricsIncluded:  false,
+    lyricsIncluded:  "no",
     lyricsText:"",
     length:  "",
-    forSomeone:  false,
+    forSomeone:  "no",
     forSomeoneExplain: "",
     emotions: "",
     extraInfo: "",
@@ -114,8 +114,8 @@ const handleSubmit = async (event) => {
             lyricsIncluded: formData.lyricsIncluded === "yes",
             lyricsText: formData.lyricsText,
             length: formData.length,
-            forSomeone: formData.forSomeone,
-            forSomeoneExplain: formData.forSomeoneExplain == "yes",
+            forSomeone: formData.forSomeone === "yes",
+            forSomeoneExplain: formData.forSomeoneExplain,
             emotions: formData.emotions,
             extraInfo: formData.extraInfo,
             bounce: formData.bounce
@@ -157,7 +157,7 @@ const handleSubmit = async (event) => {
         });
 
         
-    navigate(`/Submission`,{state:{peronsalInfoId: result.personalInfo.id}});
+    navigate(`/Submission`,{state:{personalInfoId: result.personalInfo.id}});
 
 
     } catch (error){
