@@ -2,6 +2,8 @@ package com.example.U2_final_backend.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class SongFormInfo {
     @Id
@@ -23,7 +25,7 @@ public class SongFormInfo {
     private String style;
 
     @Column(name = "instruments")
-    private String instruments;
+    private List<String> instruments;
 
     @Column(name = "lyrics_inlcuded")
     private boolean lyricsIncluded;
@@ -47,12 +49,12 @@ public class SongFormInfo {
     private String extraInfo;
 
     @Column(name = "bounce")
-    private String bounce;
+    private List<String> bounce;
 
     public SongFormInfo() {
     }
 
-    public SongFormInfo(PersonalInfo personalInfo, String title, String genre, String style, String instruments, boolean lyricsIncluded, String lyricsText, int length, boolean forSomeone, String forSomeoneExplain, String emotions, String extraInfo, String bounce) {
+    public SongFormInfo(PersonalInfo personalInfo, String title, String genre, String style, List<String> instruments, boolean lyricsIncluded, String lyricsText, int length, boolean forSomeone, String forSomeoneExplain, String emotions, String extraInfo, List<String> bounce) {
         this.personalInfo= personalInfo;
         this.title = title;
         this.genre = genre;
@@ -102,10 +104,10 @@ public class SongFormInfo {
     public void setStyle(String style) {
         this.style = style;
     }
-    public String getInstruments() {
+    public List<String> getInstruments() {
         return instruments;
     }
-    public void setInstruments(String instruments) {
+    public void setInstruments(List<String> instruments) {
         this.instruments = instruments;
     }
     public boolean isLyricsIncluded() {
@@ -150,10 +152,10 @@ public class SongFormInfo {
     public void setExtraInfo(String extraInfo) {
         this.extraInfo = extraInfo;
     }
-    public String getBounce() {
+    public List<String> getBounce() {
         return bounce;
     }
-    public void setBounce(String bounce) {
+    public void setBounce(List<String> bounce) {
         this.bounce = bounce;
     }
 }
