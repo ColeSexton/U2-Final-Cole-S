@@ -21,10 +21,10 @@ const [formData, setFormData] = useState({
     genre: "",
     style: "",
     instruments: [],
-    lyricsIncluded:  "no",
+    lyricsIncluded:  false,
     lyricsText:"",
     length:  "",
-    forSomeone:  "no",
+    forSomeone:  false,
     forSomeoneExplain: "",
     emotions: "",
     extraInfo: "",
@@ -177,7 +177,7 @@ const handleSubmit = async (event) => {
         <Header />
         <div className="songForm"> 
 
-            <h1>{formData.id ? "Edit Song Form" : "New Song Form"}</h1>
+            <h1>{formData.id ? "Edit Song Form" : "Song Form"}</h1>
 
             <form className="formSelection" onSubmit={handleSubmit}>
 
