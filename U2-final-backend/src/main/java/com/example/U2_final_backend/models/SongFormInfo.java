@@ -11,7 +11,7 @@ public class SongFormInfo {
     private int id;
 
     // Foreign key to PersonalInfo
-   @ManyToOne
+   @OneToOne
    @JoinColumn(name = "personal_info_id",referencedColumnName = "id")
    private PersonalInfo personalInfo;
 

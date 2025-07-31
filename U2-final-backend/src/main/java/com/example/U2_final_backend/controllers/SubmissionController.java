@@ -9,6 +9,7 @@ import com.example.U2_final_backend.repositories.SongFormInfoRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -42,7 +43,8 @@ public class SubmissionController {
     @PutMapping("/{id}")
     public ResponseEntity<SongFormSubmissionDTO> updateSubmission(@PathVariable int id, @RequestBody SongFormSubmissionDTO dto){
         Optional<PersonalInfo> personalInfoOpt = personalInfoRepo.findById(id);
-        Optional<SongFormInfo> songFormInfoOpt = songFormInfoRepo.findById(id);
+
+        Optional<SongFormInfo> songFormInfoOpt = Optional.ofNullable(songFormInfoRepo.findByPersonalInfoId(id));
 
         if(personalInfoOpt.isEmpty() || songFormInfoOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -86,15 +88,20 @@ public class SubmissionController {
     @GetMapping("/{id}")
     public ResponseEntity<SongFormSubmissionDTO> getSubmission(@PathVariable int id){
         Optional<PersonalInfo> personalInfoOpt = personalInfoRepo.findById(id);
-        Optional<SongFormInfo> songFormInfoOpt = songFormInfoRepo.findById(id);
 
-        if(personalInfoOpt.isEmpty() || songFormInfoOpt.isEmpty()) {
+
+        if(personalInfoOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        SongFormInfo songFormInfo = songFormInfoRepo.findByPersonalInfoId(id);
+        if (songFormInfo == null) {
             return ResponseEntity.notFound().build();
         }
 
         SongFormSubmissionDTO dto = new SongFormSubmissionDTO();
         dto.setPersonalInfo(personalInfoOpt.get());
-        dto.setSongFormInfo(songFormInfoOpt.get());
+        dto.setSongFormInfo(songFormInfo);
 
         return ResponseEntity.ok(dto);
 
@@ -102,12 +109,17 @@ public class SubmissionController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSubmission(@PathVariable int id) {
-        if (!personalInfoRepo.existsById(id) || !songFormInfoRepo.existsById(id)) {
+        Optional<PersonalInfo> personalInfoOpt = personalInfoRepo.findById(id);
+        if(personalInfoOpt.isEmpty()){
             return ResponseEntity.notFound().build();
         }
 
+        SongFormInfo relatedSongForm = songFormInfoRepo.findByPersonalInfoId(id);
+        if(relatedSongForm != null) {
+            songFormInfoRepo.delete(relatedSongForm);
+        }
+
         personalInfoRepo.deleteById(id);
-        songFormInfoRepo.deleteById(id);
 
         return ResponseEntity.noContent().build();
     }
