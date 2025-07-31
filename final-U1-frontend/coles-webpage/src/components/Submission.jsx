@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 
 
 const Submission = () =>{
-    //const location = useLocation();
-    const {personalInfoId} = useParams();
+    const location = useLocation();
+    const personalInfoId = location.state?.personalInfoId;
     const navigate = useNavigate();
     //const formData = location.state || {};
 
@@ -40,7 +40,7 @@ const Submission = () =>{
 
 
     const handleEdit = () => {
-        if(!personalInfo || songFormInfo) return;
+        if(!personalInfo || !songFormInfo) return;
 
         const formData ={
             id: personalInfo.id,
@@ -51,10 +51,10 @@ const Submission = () =>{
             genre: songFormInfo.genre,
             style: songFormInfo.style,
             instruments: songFormInfo.instruments,
-            lyricsIncluded: songFormInfo.lyricsIncluded,
+            lyricsIncluded: songFormInfo.lyricsIncluded ? "yes" : "no",
             lyricsText: songFormInfo.lyricsText,
             length: songFormInfo.length,
-            forSomeone: songFormInfo.forSomeone,
+            forSomeone: songFormInfo.forSomeone ? "yes" : "no",
             forSomeoneExplain: songFormInfo.forSomeoneExplain,
             emotions: songFormInfo.emotions,
             extraInfo: songFormInfo.extraInfo,
@@ -73,7 +73,7 @@ const Submission = () =>{
             const deleteResponse = await fetch(`http://localhost:8080/api/submit/${personalInfoId}`,
                 {method: "DELETE"});
             
-            if(!response.ok) throw new Error("Failed to delete submission");
+            if(!deleteResponse.ok) throw new Error("Failed to delete submission");
 
             alert("Submission deleted successfully");
             navigate("/SongForm");

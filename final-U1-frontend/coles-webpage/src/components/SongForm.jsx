@@ -55,8 +55,8 @@ const instrumentIcons ={
 
 //new
 useEffect(() => {
-    if(location.state?.formData){
-        setFormData(location.state.formData);
+    if(location.state){
+        setFormData(location.state);
     }
 }, [location.state]);
 
@@ -105,16 +105,16 @@ const handleSubmit = async (event) => {
             phone: formData.phone
         },
         songFormInfo:{
-            id: formData.id,
+            id: formData.songFormId,
             title: formData.title,
             genre:formData.genre,
             style: formData.style,
             instruments: formData.instruments,
-            lyricsIncluded: formData.lyricsIncluded,
+            lyricsIncluded: formData.lyricsIncluded === "yes",
             lyricsText: formData.lyricsText,
             length: formData.length,
             forSomeone: formData.forSomeone,
-            forSomeoneExplain: formData.forSomeoneExplain,
+            forSomeoneExplain: formData.forSomeoneExplain == "yes",
             emotions: formData.emotions,
             extraInfo: formData.extraInfo,
             bounce: formData.bounce
@@ -136,6 +136,7 @@ const handleSubmit = async (event) => {
 
         setFormData({
             id:result.personalInfo.id,
+            songFormId:result.songFormInfo.Id,
             name: result.personalInfo.name,
             email: result.personalInfo.email,
             phone: result.personalInfo.phone,
@@ -155,7 +156,7 @@ const handleSubmit = async (event) => {
         });
 
         
-    navigate(`/Submission/${result.personalInfo.id}`);
+    navigate(`/Submission`,{state:{peronsalInfoId: result.personalInfo.id}});
 
 
     } catch (error){
