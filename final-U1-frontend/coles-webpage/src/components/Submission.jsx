@@ -1,18 +1,91 @@
 
 import Header from "./reuse/Header";
 import Footer from "./reuse/Footer"
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 
 const Submission = () =>{
-    const location = useLocation();
+    //const location = useLocation();
+    const {personalInfoId} = useParams();
     const navigate = useNavigate();
-    const formData = location.state || {};
+    //const formData = location.state || {};
+
+    const [personalInfo, setPersonalInfo] = useState(null);
+    const [songFormInfo, setSongFormInfo] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() =>{
+        async function fetchSubmissionData(){
+            try{
+                const response = await fetch(`http://localhost:8080/api/submit/${personalInfoId}`);
+                if(!response.ok) throw new Error("Failed to fetch submission data");
+
+                const data = await response.json();
+                setPersonalInfo(data.personalInfo);
+                setSongFormInfo(data.songFormInfo);
+            }catch (error){
+                console.error(error);
+                setPersonalInfo(null);
+                setSongFormInfo(null);
+            }finally {
+                setLoading(false);
+            }
+        }
+
+        if(personalInfoId) fetchSubmissionData();
+    }, [personalInfoId]);
+
+
+
 
     const handleEdit = () => {
+        if(!personalInfo || songFormInfo) return;
+
+        const formData ={
+            id: personalInfo.id,
+            name: personalInfo.name,
+            email: personalInfo.email,
+            phone: personalInfo.phone,
+            title: songFormInfo.title,
+            genre: songFormInfo.genre,
+            style: songFormInfo.style,
+            instruments: songFormInfo.instruments,
+            lyricsIncluded: songFormInfo.lyricsIncluded,
+            lyricsText: songFormInfo.lyricsText,
+            length: songFormInfo.length,
+            forSomeone: songFormInfo.forSomeone,
+            forSomeoneExplain: songFormInfo.forSomeoneExplain,
+            emotions: songFormInfo.emotions,
+            extraInfo: songFormInfo.extraInfo,
+            bounce: songFormInfo.bounce || []
+        };
+
         navigate('/SongForm', {
             state: formData
         });
     };
+
+    const handleDelete = async () =>{
+        if(!window.confirm("Are you sure you want to delete this submission?")) return;
+
+        try{
+            const deleteResponse = await fetch(`http://localhost:8080/api/submit/${personalInfoId}`,
+                {method: "DELETE"});
+            
+            if(!response.ok) throw new Error("Failed to delete submission");
+
+            alert("Submission deleted successfully");
+            navigate("/SongForm");
+        }catch (error){
+            console.error(error);
+            alert(error.message);
+        }
+    };
+
+    if (loading) return <div className="loading">Loading...</div>;
+
+    if(!personalInfo) return <div>No Personal info found.</div>;
 
     return(
         <>
@@ -38,15 +111,21 @@ const Submission = () =>{
                         <th>Phone</th>
                     </tr>
                     <tr>
-                        <td>{formData.name}</td>
-                        <td>{formData.email}</td>
-                        <td>{formData.phone}</td>
+                        <td>{personalInfo.name}</td>
+                        <td>{personalInfo.email}</td>
+                        <td>{personalInfo.phone}</td>
                     </tr>
                 </table>
 
                     <div className="editDetails">
                     Click to edit details  <i className="fas fa-arrow-right animatedArrow"></i>
                     <button onClick={handleEdit} className="editButton">Edit</button>
+                    </div>
+
+                    <div className="deleteButton">
+                    <button onClick={handleDelete}>
+                        Delete
+                    </button>
                     </div>
 
                 </div>
