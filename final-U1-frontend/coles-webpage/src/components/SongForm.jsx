@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaGuitar, FaMicrophone } from "react-icons/fa";
 import { GiDrumKit, GiGuitarBassHead, GiGuitar, GiGrandPiano, GiPianoKeys, GiTambourine  } from "react-icons/gi";
 import { BiSolidPiano } from "react-icons/bi";
@@ -12,21 +12,22 @@ import Header from "./reuse/Header";
 const SongForm = () =>{
 const location =useLocation();
 const [formData, setFormData] = useState({
-    name: location.state?.name || "",
-    email: location.state?.email || "",
-    phone:location.state?.phone || "",
-    title: location.state?.title || "",
-    genre: location.state?.genre ||"",
-    style: location.state?.style ||"",
-    instruments: location.state?.instruments ||[],
-    lyricsIncluded: location.state?.lyricsIncluded || false,
-    lyricsText: location.state?.lyricsText ||"",
-    length: location.state?.length || "",
-    forSomeone: location.state?.forSomeone || false,
-    forSomeoneExplain: location.state?.forSomeoneExplain ||"",
-    emotions: location.state?.emotions ||"",
-    extraInfo: location.state?.extraInfo ||"",
-    bounce:location.state?.bounce || []
+    id: null,
+    name: "",
+    email:  "",
+    phone: "",
+    title:  "",
+    genre: "",
+    style: "",
+    instruments: [],
+    lyricsIncluded:  false,
+    lyricsText:"",
+    length:  "",
+    forSomeone:  false,
+    forSomeoneExplain: "",
+    emotions: "",
+    extraInfo: "",
+    bounce:[]
 
 });
 
@@ -52,6 +53,12 @@ const instrumentIcons ={
     vocal: <FaMicrophone size={40} />
 }
 
+//new
+useEffect(() => {
+    if(location.state?.formData){
+        setFormData(location.state.formData);
+    }
+}, [location.state]);
 
 
 const handleChange = (e) =>{
@@ -74,17 +81,89 @@ const handleChange = (e) =>{
         ...formData,
         [name]: type === "checkbox" ? checked : value
     }));
-}
+    }
 }
 
 const navigate =useNavigate();
 
 
-const handleSubmit = (event) => {
+const handleSubmit = async (event) => {
     event.preventDefault();
-    navigate("/Submission", {
-        state: formData
-    });
+
+    //new
+    const url = formData.id
+    ? `http://localhost:8080/api/submit/${formData.id}`
+    :"http://localhost:8080/api/submit";
+
+    const method = formData.id ? "PUT" : "POST";
+
+    const payload ={
+        personalInfo:{
+            id: formData.id,
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone
+        },
+        songFormInfo:{
+            id: formData.id,
+            title: formData.title,
+            genre:formData.genre,
+            style: formData.style,
+            instruments: formData.instruments,
+            lyricsIncluded: formData.lyricsIncluded,
+            lyricsText: formData.lyricsText,
+            length: formData.length,
+            forSomeone: formData.forSomeone,
+            forSomeoneExplain: formData.forSomeoneExplain,
+            emotions: formData.emotions,
+            extraInfo: formData.extraInfo,
+            bounce: formData.bounce
+        }
+    };
+
+    try{
+        const response = await fetch(url, {
+            method,
+            headers:{"Content-Type": "application/json"},
+            body: JSON.stringify(payload)
+        });
+
+        if(!response.ok){
+            throw new Error(`Failed to ${method === 'POST'?'submit':'update'} form `);
+        }
+
+        const result = await response.json();
+
+        setFormData({
+            id:result.personalInfo.id,
+            name: result.personalInfo.name,
+            email: result.personalInfo.email,
+            phone: result.personalInfo.phone,
+            title: result.songFormInfo.title,
+            genre: result.songFormInfo.genre,
+            style: result.songFormInfo.style,
+            instruments: result.songFormInfo.instruments,
+            lyricsIncluded: result.songFormInfo.lyricsIncluded,
+            lyricsText: result.songFormInfo.lyricsText,
+            length: result.songFormInfo.length,
+            forSomeone: result.songFormInfo.forSomeone,
+            forSomeoneExplain: result.songFormInfo.forSomeoneExplain,
+            emotions: result.songFormInfo.emotions,
+            extraInfo: result.songFormInfo.extraInfo,
+            bounce: result.songFormInfo.bounce
+
+        });
+
+        
+    navigate(`/Submission/${result.personalInfo.id}`);
+
+
+    } catch (error){
+        console.error(error);
+        alert(error.message);
+        
+    }
+
 
 
 };
@@ -96,7 +175,7 @@ const handleSubmit = (event) => {
         <Header />
         <div className="songForm"> 
 
-            <h1>Song Form</h1>
+            <h1>{formData.id ? "Edit Song Form" : "New Song Form"}</h1>
 
             <form className="formSelection" onSubmit={handleSubmit}>
 
@@ -338,7 +417,7 @@ const handleSubmit = (event) => {
                     ))}
             </fieldset>
 
-            <button type="submit" id="submitButton">Submit</button>
+            <button type="submit" id="submitButton">{formData.id ? "Update" : "Submit"}</button>
 
             </form>
 
