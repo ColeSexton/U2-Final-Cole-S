@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import SynthTrack from './SynthTrack';
 import '../synth/SynthTrack.css';
+import Header from '../reuse/Header';
+import Footer from '../reuse/Footer';
 
 const SynthApp = () => {
     const [activeTrack, setActiveTrack] = useState(1);
 
     return (
+        <div>
+        <Header />
         <div className='synth'>
 
         <h1>Syntheszier DAW</h1>
@@ -26,6 +30,8 @@ const SynthApp = () => {
             <SynthTrack isActive={activeTrack === 2} octaveShift={-1} />
         </div>
 
+        </div>
+        
         </div>
     );
 };

@@ -10,7 +10,7 @@ const Generator = () =>{
         <div >
         <Header />
             <div className="generator">
-            <h2 id="genH2">Choose a category for advice</h2>
+            <h2 id="genH2">Choose a category</h2>
 
                 <div className="categoryButtons">
                     <button className={`categoryButton ${selectedCategory === 'music' ? 'active':''}`} onClick={()=> setSelectedCategory("music")}>Music</button>

@@ -14,6 +14,7 @@ const Header = () =>{
             <span className="headerLinks"><Link to={'/SongForm'}>Song Form</Link></span>
             <span className="headerLinks"><Link to={'/Bio'}>About Me</Link></span>
             <span className="headerLinks"><Link to={'/Generator'}>Generator</Link></span>
+            <span className="headerLinks"><Link to={'/synth'}>Synth</Link></span>
             
             </div>
             
