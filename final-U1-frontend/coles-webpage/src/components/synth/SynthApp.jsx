@@ -14,18 +14,20 @@ const SynthApp = () => {
 
         <h1>Syntheszier DAW</h1>
 
-        <div>
-            <p>Choose Keyboard</p>
-            <button onClick={() => setActiveTrack(1)}>Track 1: Lead</button>
-            <button onClick={() => setActiveTrack(2)}>Track 2: Bass</button>
+        <div className='chooseKey'>
+            <h3>Choose Keyboard</h3>
+            <button className='chooseB' onClick={() => setActiveTrack(1)}>Track 1: Lead</button>
+            <button className='chooseB' onClick={() => setActiveTrack(2)}>Track 2: Bass</button>
         </div>
 
-        <div>
+        <br />
+
+        <div className='synth1'>
             <h3>Lead</h3>
             <SynthTrack isActive={activeTrack === 1} octaveShift={0}/>
         </div>
 
-        <div>
+        <div className='synth2'>
             <h3>Bass</h3>
             <SynthTrack isActive={activeTrack === 2} octaveShift={-1} />
         </div>

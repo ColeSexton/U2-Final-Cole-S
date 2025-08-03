@@ -1,6 +1,30 @@
 .synth{
-    background-color: rgb(252, 252, 246);
+    background-color: black;
+    color: grey;
+    padding: 5px;
+    flex: 1;
 }
+
+h1{
+  display: flex;
+  justify-content: center;
+  color: grey;
+}
+h3{
+  display: flex;
+  justify-content: center;
+  color:grey ;
+  font-size: 20px;
+}
+.synth1,
+.synth2{
+  display: block;
+  border: #5b0f5b;
+  border-radius: 10px;
+  border-style:double;
+  padding-bottom: 20px;
+}
+
 
 .piano{
     display: flex;
@@ -26,12 +50,25 @@
   width: 100%;
 }
 
-/* Wrap all controls and keyboard inside this */
-.synth {
-  flex: 1;
+
+.chooseKey{
+  display:flex;
+  justify-content: center;
+  align-items:center;
 }
 
-/* Fader styles */
+.chooseB{
+  padding: 0.75rem;
+  border: 1px solid #5b0f5b;
+  background-color:#6b6b6b;
+  color: #5b0f5b;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  
+}
+
+
 .synthFader {
   display: flex;
   flex-direction: column;
@@ -40,13 +77,13 @@
 }
 
 .volumeSlider {
-  transform: rotate(-90deg); /* rotate to make vertical */
-  width: 100px;              /* horizontal length becomes vertical height visually */
-  height: 20px;              /* thickness of the slider */
+  transform: rotate(-90deg);
+  width: 100px;             
+  height: 20px;              
   margin-bottom: 3rem;
 }
 
-/* Meter styles */
+
 .meterContainer {
   width: 15px;
   height: 150px;
@@ -60,5 +97,4 @@
   bottom: 0;
   width: 100%;
   background-color: #0f0;
-  /*transition: height 0.1s ease-out; */
 }

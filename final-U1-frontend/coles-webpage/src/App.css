@@ -113,6 +113,7 @@ cursor:default;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     padding: 12px 28px;
     margin-left: 20px;
+    cursor: pointer;
 }
 
 
