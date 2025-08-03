@@ -15,19 +15,37 @@ const MainPage = () =>{
     
 
                 <section id="mainButtons">
-                    <button id="aboutMe"><Link to={'/Bio'} style={{textDecoration: 'none', color: 'black'}}>About Me</Link></button>
-                    <span className="hide">Learn more about me and this page!</span>
 
-                    <button id="song"><Link to={'/SongForm'} style={{textDecoration: 'none', color: 'black'}}>Song</Link></button>
-                    <span className="hide">I will write you a song, click me!</span>
+                    <Link to={'/Bio'} className="navLink">
+                    <div className="buttonContainer">
+                        <button id="aboutMe">About Me</button>
+                        <span className="hide">Learn more about me and this page!</span>
+                    </div>
+                    </Link>
 
-                    <button id="gen"><Link to={'/Generator'} style={{textDecoration: 'none', color: 'black'}}>Generator</Link></button>
-                    <span className="hide">Stuck creatively? I can help!</span>
+                    <Link to={'/SongForm'} className="navLink">
+                    <div className="buttonContainer">
+                        <button id="song">Song</button>
+                        <span className="hide">I will write you a song, click me!</span>
+                    </div>
+                    </Link>
 
-                    <button id="gen"><Link to={'/synth'} style={{textDecoration: 'none', color: 'black'}}>Synth</Link></button>
-                    <span className="hide">Play me!</span>
+                    <Link to={'/Generator'} className="navLink">
+                    <div className="buttonContainer">
+                        <button id="gen">Generator</button>
+                        <span className="hide">Stuck creatively? I can help!</span>
+                    </div>
+                    </Link>
+
+                    <Link to={'/synth'} className="navLink">
+                    <div className="buttonContainer">
+                        <button id="synth">Synth</button>
+                        <span className="hide">Play me!</span>
+                    </div>
+                    </Link>
 
                 </section>
+
 
                 <div className="mainGif"><img src="https://media1.giphy.com/media/4VWs1GcTDQLtXPuqxM/source.gif" alt="Bass guitar gif"></img>
                 </div>

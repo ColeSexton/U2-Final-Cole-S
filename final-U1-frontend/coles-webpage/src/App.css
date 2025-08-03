@@ -35,24 +35,49 @@
 
 #mainButtons{
     display: flex;
-    justify-content: space-between;
-
+    justify-content: space-around;
     margin: 0 auto;
     margin-top: 100px;
 }
 
+.buttonContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+}
+
 .hide{
-    display: none;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: larger;
+  display: none;
+  position: absolute;
+  bottom: 120%; /* appears above the button */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgb(235, 230, 230);
+  padding: 8px 12px;
+  border: 2px solid #5b0f5b;
+  border-radius: 6px;
+  color: #5b0f5b;
+  font-size: 16px;
+  white-space: nowrap;
+  z-index: 1000;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.mainGif{
-    display: flex;
-    justify-content: center;
+.navLink {
+  text-decoration: none;
+  color: black;
 }
 
-#aboutMe{
+.navLink:hover .hide {
+  display: block;
+}
+
+#aboutMe,
+#song,
+#gen,
+#synth{
     color: black;
     background-color:grey;
     border: 3px solid #5b0f5b;
@@ -63,53 +88,15 @@
     margin-left: 20px;
 }
 
-#aboutMe:hover + .hide{
-    display: block;
-    color: #5b0f5b;
-    position: absolute;
-    top: 350px;
-    left: 30px;
 
+
+.mainGif{
+    display: flex;
+    justify-content: center;
 }
 
-#song{
-    color: black;
-    background-color:grey;
-    border: 3px solid #5b0f5b;
-    border-radius: 8px;
-    font-size: 20px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    padding: 12px 28px;
 
-}
 
-#song:hover +.hide{
-    display: block;
-    color: #5b0f5b;
-    position:absolute;
-    top: 350px;
-    left: 440px;
-}
-
-#gen{
-    color: black;
-    background-color:grey;
-    border: 3px solid #5b0f5b;
-    border-radius: 8px;
-    font-size: 20px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    padding: 12px 28px;
-    margin-right: 20px;
-
-}
-
-#gen:hover +.hide{
-    display: block;
-    color: #5b0f5b;
-    position: absolute;
-    top: 350px;
-    right: 30px;
-}
 
 
 #bioP{
@@ -204,6 +191,7 @@ width: 100%;
         color: #5b0f5b;
     }
 }
+
 
 
 .generator{
