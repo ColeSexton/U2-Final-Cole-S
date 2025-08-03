@@ -24,6 +24,9 @@ const MainPage = () =>{
                     <button id="gen"><Link to={'/Generator'} style={{textDecoration: 'none', color: 'black'}}>Generator</Link></button>
                     <span className="hide">Stuck creatively? I can help!</span>
 
+                    <button id="gen"><Link to={'/synth'} style={{textDecoration: 'none', color: 'black'}}>Synth</Link></button>
+                    <span className="hide">Play me!</span>
+
                 </section>
 
                 <div className="mainGif"><img src="https://media1.giphy.com/media/4VWs1GcTDQLtXPuqxM/source.gif" alt="Bass guitar gif"></img>
