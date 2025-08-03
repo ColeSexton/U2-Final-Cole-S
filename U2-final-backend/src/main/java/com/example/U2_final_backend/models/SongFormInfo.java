@@ -1,5 +1,6 @@
 package com.example.U2_final_backend.models;
 
+import com.example.U2_final_backend.converters.StringListConverter;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class SongFormInfo {
     private String style;
 
     @Column(name = "instruments")
+    @Convert(converter = StringListConverter.class)
     private List<String> instruments;
 
     @Column(name = "lyrics_inlcuded")
@@ -49,6 +51,7 @@ public class SongFormInfo {
     private String extraInfo;
 
     @Column(name = "bounce")
+    @Convert(converter = StringListConverter.class)
     private List<String> bounce;
 
     public SongFormInfo() {
