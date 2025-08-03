@@ -50,7 +50,6 @@ const SynthFader =({audioCtx, inputNode}) =>{
 
     }, [audioCtx, inputNode]);
 
-console.log('rms level', level);
 
     const handleVolumeChange = (e) => {
         const val = parseFloat(e.target.value);

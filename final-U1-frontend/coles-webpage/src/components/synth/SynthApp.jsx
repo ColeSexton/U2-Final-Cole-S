@@ -12,7 +12,7 @@ const SynthApp = () => {
         <Header />
         <div className='synth'>
 
-        <h1>Syntheszier DAW</h1>
+        <h1 className='synthHead'>Syntheszier DAW</h1>
 
         <div className='chooseKey'>
             <h3>Choose Keyboard</h3>
