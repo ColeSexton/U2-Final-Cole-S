@@ -1,5 +1,6 @@
 
 
+
 .mainPage{
     background-color: black;
 }
@@ -21,6 +22,12 @@
 
 }
 
+#welcome:hover{
+animation: colorChange2 4s infinite ease-in-out;
+cursor:default;
+}
+
+
 @keyframes colorChange {
     0% {border-color: #5b0f5b;}
     25% {border-color: rgb(12, 30, 190);}
@@ -28,6 +35,26 @@
     100% {border-color: #5b0f5b;}
     
 }
+
+
+@keyframes colorChange2 {
+  0% {
+    color: #5b0f5b;
+  }
+  25% {
+    color: #8b1c8b;
+  }
+  50% {
+    color: #cc66cc;
+  }
+  75% {
+    color: #a832a8;
+  }
+  100% {
+    color: #5b0f5b;
+  }
+}
+
 
 
 
