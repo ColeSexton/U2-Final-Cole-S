@@ -118,15 +118,15 @@ const Submission = () =>{
                 </table>
 
                     <div className="editDetails">
-                    Click to <i className="fas fa-arrow-right animatedArrow"></i>
+                    <i className="fas fa-arrow-right animatedArrow"></i>
                     <button onClick={handleEdit} className="editButton">Edit</button>
-                    </div>
-
-                    <div className="editDetails">
-                    Click to <i className="fas fa-arrow-right animatedArrow"></i>
+                    <i className="fas fa-arrow-left animatedArrow"></i>
+                    
+                    <i className="fas fa-arrow-right animatedArrow"></i>
                     <button onClick={handleDelete} className="editButton">
                         Delete
                     </button>
+                    <i className="fas fa-arrow-left animatedArrow"></i>
                     </div>
 
                 </div>
