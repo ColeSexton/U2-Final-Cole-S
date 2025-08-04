@@ -41,7 +41,7 @@ This project isn’t deployed publicly yet, but you can run it on your machine.
    - Run the main Java class (U2FinalBackendApplication.java) to start the backend server.
    
 4. Frontend Setup
-   - Open the final-U2-frontend folder in Visual Studio Code.
+   - Open the final-U1-frontend folder in Visual Studio Code.
    - Install the dependencies: npm install
    - If you don’t already have Vite installed globally, install it: npm install vite@latest
    - then: npm run dev
