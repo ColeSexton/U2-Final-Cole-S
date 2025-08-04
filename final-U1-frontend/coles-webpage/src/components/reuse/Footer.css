@@ -4,9 +4,7 @@ html, body {
   width: 100%;
 }
 footer {
-  position: fixed;
-  bottom: 0;
-  width: 100vw;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -14,7 +12,6 @@ footer {
   color: rgb(204, 202, 199);
   background-color: #5b0f5b;
   box-sizing: border-box;
-  z-index: 1000;
 }
 
 #footerLeft, #footerCenter, #footerRight {

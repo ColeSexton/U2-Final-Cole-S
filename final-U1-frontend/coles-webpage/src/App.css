@@ -125,10 +125,21 @@ cursor:default;
 
 
 
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
+.bioWrap{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2rem;
+}
 
 #bioP{
-    display: flexbox;
     margin: auto;
     width: 350px;
     color: rgb(204, 202, 199);
@@ -139,7 +150,8 @@ cursor:default;
     display: flex;
     justify-content: center;
     color: rgb(204, 202, 199);
-    
+    gap: 1rem;
+    margin-top: 1rem;
 
 }
 
