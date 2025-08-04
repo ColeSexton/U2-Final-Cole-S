@@ -34,22 +34,23 @@ This project isn’t deployed publicly yet, but you can run it on your machine.
 ### Setup
 1. Fork and Clone this Repository 
 2. Backend Setup
-   Open the U2-Final-Backend folder in IntelliJ.
-   In MySQL, create a schema named: unit2_final
+   - Open the U2-Final-Backend folder in IntelliJ.
+   - In MySQL, create a schema named: unit2_final
 
-   Open application.properties in the backend folder and update the database username and password with your local MySQL credentials.
-   Run the main Java class (U2FinalApplication.java) to start the backend server.
+   - Open application.properties in the backend folder and update the database username and password with your local MySQL credentials.
+   - Run the main Java class (U2FinalApplication.java) to start the backend server.
    
 4. Frontend Setup
-   Open the U2-Final-Frontend folder in Visual Studio Code.
-   Install the dependencies: npm install
-   If you don’t already have Vite installed globally, install it: npm install vite@latest
-   then: npm run dev
-   Open http://localhost:5173 in your browser
+   - Open the U2-Final-Frontend folder in Visual Studio Code.
+   - Install the dependencies: npm install
+   - If you don’t already have Vite installed globally, install it: npm install vite@latest
+   - then: npm run dev
+   - Open http://localhost:5173 in your browser
 
 
 
 Wireframe: https://wireframe.cc/pro/edit/906393
+
 ER Diagram: https://drive.google.com/drive/u/0/folders/1nYWzB7bJWcYm86FFgS9_NNLu6zDjbG4q
 
 
