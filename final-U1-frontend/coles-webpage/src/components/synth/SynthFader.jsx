@@ -21,7 +21,7 @@ const SynthFader =({audioCtx, inputNode}) =>{
 
         inputNode.connect(gainNode);
         gainNode.connect(analyser);
-        //analyser.connect(audioCtx.destination);
+        
 
         gainNodeRef.current = gainNode;
         analyserRef.current = analyser;
