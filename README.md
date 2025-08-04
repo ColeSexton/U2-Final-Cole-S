@@ -9,7 +9,7 @@ To help spark creativity, there’s also a Generator component that gives users 
 
 Finally, I’ve included links throughout the site to music by me and my friends, if you're looking to discover something new.
 
---
+
 
 ## Technologies Used:
 -React
@@ -19,9 +19,9 @@ Finally, I’ve included links throughout the site to music by me and my friends
 -Java (Spring Boot)
 -MySQL
 
---
 
-##Running the App Locally
+
+## Running the App Locally
 This project isn’t deployed publicly yet, but you can run it on your machine.
 
 ### What You’ll Need
@@ -31,7 +31,7 @@ This project isn’t deployed publicly yet, but you can run it on your machine.
 -MySQL (for the database)
 -Node.js and npm (to run the frontend and install Vite)
 
-Setup
+### Setup
 1. Fork and Clone this Repository 
 2. Backend Setup
    Open the U2-Final-Backend folder in IntelliJ.
