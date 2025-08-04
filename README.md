@@ -12,12 +12,12 @@ Finally, I’ve included links throughout the site to music by me and my friends
 
 
 ## Technologies Used:
--React
--JavaScript
--CSS
--HTML
--Java (Spring Boot)
--MySQL
+- React
+- JavaScript
+- CSS
+- HTML
+- Java (Spring Boot)
+- MySQL
 
 
 
@@ -26,10 +26,10 @@ This project isn’t deployed publicly yet, but you can run it on your machine.
 
 ### What You’ll Need
 
--Visual Studio Code (for the React frontend)
--IntelliJ Community Edition (for the Spring Boot backend)
--MySQL (for the database)
--Node.js and npm (to run the frontend and install Vite)
+- Visual Studio Code (for the React frontend)
+- IntelliJ Community Edition (for the Spring Boot backend)
+- MySQL (for the database)
+- Node.js and npm (to run the frontend and install Vite)
 
 ### Setup
 1. Fork and Clone this Repository 
@@ -57,10 +57,10 @@ ER Diagram: https://drive.google.com/drive/u/0/folders/1nYWzB7bJWcYm86FFgS9_NNLu
 ## Future Plans:
 There are a number of features I’d like to build next:
 
--A blog section to post updates and ideas
--A stage plot designer for live music setups
--More downloadable or in-browser instruments
--A way to record audio from the synths and bounce it into a .wav file
+- A blog section to post updates and ideas
+- A stage plot designer for live music setups
+- More downloadable or in-browser instruments
+- A way to record audio from the synths and bounce it into a .wav file
 
 I’ve already started laying the groundwork for synth recording, and that will likely be the next feature I finish. The goal is to let users save what they create and store it in the database along with their form submission.
 
