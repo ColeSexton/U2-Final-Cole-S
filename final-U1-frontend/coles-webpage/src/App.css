@@ -323,4 +323,10 @@ width: 100%;
     .generator{
         flex-direction: column;
     }
+    .bioPageContainer{
+        flex-direction: column;
+    }
+
 }
+
+
