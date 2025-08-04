@@ -164,7 +164,11 @@ height: auto;
 }
 
 
-
+.subWrapper{
+    min-height: 75vh;
+    display: flex;
+    flex-direction: column;
+}
 
 .submitPage{
     color: #6b6b6b;
@@ -172,7 +176,7 @@ height: auto;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .subTable{

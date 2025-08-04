@@ -90,6 +90,7 @@ const Submission = () =>{
     return(
         <>
         <Header />
+        <div className="subWrapper">
         <div className="submitPage">
         
 
@@ -145,9 +146,11 @@ const Submission = () =>{
 
 
                 
-            
+         
         </div>
-        <Footer />
+        
+        </div>
+        <Footer />  
         </>
     )
 
