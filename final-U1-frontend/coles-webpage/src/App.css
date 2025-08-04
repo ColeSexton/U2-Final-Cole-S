@@ -139,6 +139,7 @@ cursor:default;
     display: flex;
     justify-content: center;
     color: rgb(204, 202, 199);
+    
 
 }
 
@@ -149,6 +150,8 @@ margin: auto;
 width: 350px;
 height: auto;
 }
+
+
 
 
 .submitPage{

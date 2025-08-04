@@ -27,19 +27,47 @@ h3{
 
 
 .piano{
-    display: flex;
+  position: relative;
+  width: fit-content;
+  margin: 2rem auto;
 }
 
-.pianoKeys{
-    width: 40px;
-    height: 150px; 
-    margin-right: 4px; 
-    background: #fff; 
-    border: 1px solid #000; 
-    border-radius: 4px; 
-    font-size: 0.7rem; 
-    cursor: pointer;
+.white-keys {
+  display: flex;
 }
+
+.black-keys {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+}
+
+.key {
+  font-size: 0.75rem;
+  text-align: center;
+  border: 1px solid #555;
+}
+
+.white {
+  width: 80px;
+  height: 200px;
+  background: #ccc;
+  z-index: 1;
+}
+
+.black {
+  position: absolute;
+  width: 35px;
+  height: 125px;
+  background: #444;
+  z-index: 2;
+  margin-left: -12.5px; 
+}
+
+
+
 
 
 

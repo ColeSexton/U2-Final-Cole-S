@@ -24,21 +24,34 @@ const keyboardNotes = {
 
 //for UI piano 
 const noteKeyFreq = [
-    {note: "C4", key: "a", freq: 261.63},
-    {note: "C#4", key: "w", freq: 277.18},
-    {note: "D4", key: "s", freq: 293.66},
-    {note: "D#4", key: "e", freq: 311.13},
-    {note: "E4", key: "d", freq: 329.63},
-    {note: "F4", key: "f", freq: 349.23},
-    {note: "F#4", key: "t", freq: 369.99},
-    {note: "G4", key: "g", freq: 392},
-    {note: "G#4", key: "y", freq: 415.30},
-    {note: "A4", key: "h", freq: 440},
-    {note: "A#4", key: "u", freq: 466.16},
-    {note: "B4", key: "j", freq: 493.88},
-    {note: "C5", key: "k", freq: 523.25},
+    {note: "C4", key: "a", freq: 261.63, type: "white"},
+    {note: "C#4", key: "w", freq: 277.18, type: "black"},
+    {note: "D4", key: "s", freq: 293.66, type: "white"},
+    {note: "D#4", key: "e", freq: 311.13, type: "black"},
+    {note: "E4", key: "d", freq: 329.63, type: "white"},
+    {note: "F4", key: "f", freq: 349.23, type: "white"},
+    {note: "F#4", key: "t", freq: 369.99, type: "black"},
+    {note: "G4", key: "g", freq: 392, type: "white"},
+    {note: "G#4", key: "y", freq: 415.30, type: "black"},
+    {note: "A4", key: "h", freq: 440, type: "white"},
+    {note: "A#4", key: "u", freq: 466.16, type:"black"} ,
+    {note: "B4", key: "j", freq: 493.88, type:"white"},
+    {note: "C5", key: "k", freq: 523.25, type:"white"},
 
 ]
+
+//for position of black keys
+function getBlackKeyPosition(note){
+    const positionMap ={
+        'C#4' : 75,
+        'D#4' : 155,
+        'F#4' : 315,
+        'G#4' : 395,
+        'A#4' : 475
+    };
+    return `${positionMap[note]}px`;
+}
+
 
 const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = false}) =>{
     const audioCtxRef = useRef(null);
@@ -303,9 +316,12 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
         />
 
       <div className='piano'>
-        {noteKeyFreq.map(({note, key, freq})=>(
+
+      <div className='white-keys'>
+
+        {noteKeyFreq.filter(n => n.type === 'white').map(({note, key, freq})=>(
             <button
-                className='pianoKeys'
+                className='key white'
                 key={note}
                 onMouseDown={() => {playNote(freq, key);
                     }}
@@ -315,8 +331,31 @@ const SynthTrack = ({ defaultWaveform = 'sine', octaveShift = 0, isActive = fals
             {note}
             <br />
             ({key})
-            </button>
+            </button> 
         ))}
+        </div>
+
+        <div className='black-keys'>
+
+            {noteKeyFreq.filter(n => n.type === 'black').map(({note, key, freq})=>(
+            <button
+                className='key black'
+                key={note}
+                onMouseDown={() => {playNote(freq, key);
+                    }}
+                    
+                onMouseUp={()=> stopNote(key)}
+                style={{left: getBlackKeyPosition(note)}}
+            >
+            {note}
+            <br />
+            ({key})
+            </button> 
+        ))}
+
+        </div>
+
+
       </div>
     </div>
 

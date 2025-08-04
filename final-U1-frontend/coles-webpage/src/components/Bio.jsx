@@ -13,7 +13,7 @@ const Bio = () =>{
          
 
             <p id="bioP">
-                Hello! I am Cole Sexton. I am Musician, Audio Engineer, and aspiring Developer.<br />
+                Hello! I am Cole Sexton. I am Musician, Audio Engineer, and Software Developer.<br />
                 I truly love everything about music: listening to it, playing it, creating it, you name it!<br />
                 I'd be honored if you would check out my music at the links below. <br />
                 I would also love to write you a song or soundscape. Whether its for a loved one, yourself,<br />
@@ -38,7 +38,6 @@ const Bio = () =>{
 
                    
                 </div>
-
                
         </div>
     )
