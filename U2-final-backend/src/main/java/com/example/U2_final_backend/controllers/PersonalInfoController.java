@@ -35,7 +35,7 @@ public class PersonalInfoController {
             personalInfo.setId(id);
             return personalInfoRepository.save(personalInfo);
         }
-        return null; // maybe throw an exception
+        return null;
     }
 
     @DeleteMapping("/{id}")
