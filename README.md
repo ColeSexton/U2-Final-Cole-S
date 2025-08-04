@@ -38,10 +38,10 @@ This project isn’t deployed publicly yet, but you can run it on your machine.
    - In MySQL, create a schema named: unit2_final
 
    - Open application.properties in the backend folder and update the database username and password with your local MySQL credentials.
-   - Run the main Java class (U2FinalApplication.java) to start the backend server.
+   - Run the main Java class (U2FinalBackendApplication.java) to start the backend server.
    
 4. Frontend Setup
-   - Open the U2-Final-Frontend folder in Visual Studio Code.
+   - Open the final-U2-frontend folder in Visual Studio Code.
    - Install the dependencies: npm install
    - If you don’t already have Vite installed globally, install it: npm install vite@latest
    - then: npm run dev
